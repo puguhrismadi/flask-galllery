@@ -10,9 +10,9 @@ COPY . .
 # Install dependencies dalam virtual environment dan kompilasi file Python
 RUN python -m venv venv && \
     ./venv/bin/pip install --no-cache-dir -r requirements.txt && \
-    python -m compileall . && \
+    ./venv/bin/python -m compileall . && \
     mkdir -p /app/pycache && \
-    find __pycache__ -mindepth 1 -type f -exec cp {} /app/pycache/ \; 
+    if [ -d "__pycache__" ]; then cp -r __pycache__/* /app/pycache/; 
 
 # Hanya simpan file hasil kompilasi
 WORKDIR /app/pycache
