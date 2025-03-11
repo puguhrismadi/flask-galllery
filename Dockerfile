@@ -7,11 +7,15 @@ WORKDIR /app
 # Salin file yang diperlukan
 COPY . .
 
-# Install dependencies dalam virtual environment && remove all file extension py after build
+# Install dependencies dalam virtual environment
 RUN python -m venv venv && \
-    ./venv/bin/pip install --no-cache-dir -r requirements.txt && \
-    mkdir -p /app/pycache && \
-    find /app -type f -name "*.py" -exec rm -f {} \;
+    . venv/bin/activate && \
+    pip install --no-cache-dir -r requirements.txt && \
+    python -m compileall . && \
+    mkdir -p /app/pycache && cp -r __pycache__/* /app/pycache/
+
+# Hanya simpan file hasil kompilasi
+WORKDIR /app/pycache
 
 # Set environment variables untuk Flask dan Database
 ENV FLASK_APP=routes
