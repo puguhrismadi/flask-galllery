@@ -1,22 +1,29 @@
-# Gunakan base image Python
-FROM python:3.11
+# Gunakan base image Python yang lebih ringan
+FROM python:3.11-slim
 
 # Set direktori kerja dalam container
 WORKDIR /app
 
-# Salin semua file ke dalam container
+# Salin file yang diperlukan
 COPY . .
 
-# Install dependencies
-RUN pip install --no-cache-dir -r requirements.txt
+# Install dependencies dalam virtual environment
+RUN python -m venv venv && \
+    . venv/bin/activate && \
+    pip install --no-cache-dir -r requirements.txt && \
+    python -m compileall . && \
+    mkdir -p /app/pycache && cp -r __pycache__/* /app/pycache/
 
-# Set environment variables
-ENV FLASK_APP=routes.py
-ENV FLASK_RUN_HOST=0.0.0.0
-ENV DATABASE_URL=postgresql://postgres:spasi2025@192.168.7.126/gallery_db
+# Hanya simpan file hasil kompilasi
+WORKDIR /app/pycache
 
-# Expose port Flask
+# Set environment variables untuk Flask dan Database
+ENV FLASK_APP=routes
+ENV FLASK_ENV=production
+ENV DATABASE_URL=postgresql://postgres:spasi2025@192.168.7.26/gallery_db
+
+# Expose port 5000 untuk Flask
 EXPOSE 5000
 
-# Jalankan aplikasi
-CMD ["python", "routes.py"]
+# Gunakan Gunicorn untuk menjalankan Flask dalam mode Production
+CMD ["/app/venv/bin/gunicorn", "-w", "4", "-b", "0.0.0.0:5000", "routes:app"]
