@@ -9,12 +9,9 @@ COPY . .
 
 # Install dependencies dalam virtual environment
 RUN python -m venv venv && \
-    . venv/bin/activate && \
-    pip install --no-cache-dir -r requirements.txt && \
-    cp -r __pycache__/* /app/pycache/
-
-# Hanya simpan file hasil kompilasi
-WORKDIR /app/pycache
+    ./venv/bin/pip install --no-cache-dir -r requirements.txt && \
+    mkdir -p /app/pycache && \
+    cp -r __pycache__/* /app/pycache/ || true
 
 # Set environment variables untuk Flask dan Database
 ENV FLASK_APP=routes
