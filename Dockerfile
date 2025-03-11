@@ -13,10 +13,10 @@ RUN pip install --no-cache-dir -r requirements.txt
 # Set environment variables
 ENV FLASK_APP=routes.py
 ENV FLASK_RUN_HOST=0.0.0.0
-ENV DATABASE_URL=postgresql://postgres:spasi2025@db/gallery_db
+ENV DATABASE_URL=postgresql://postgres:spasi2025@192.168.7.126/gallery_db
 
 # Expose port Flask
 EXPOSE 5000
 
 # Jalankan aplikasi
-CMD ["flask", "run"]
+CMD ["python", "routes.py"]
