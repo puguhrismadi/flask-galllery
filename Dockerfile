@@ -20,7 +20,7 @@ WORKDIR /app/pycache
 # Set environment variables untuk Flask dan Database
 ENV FLASK_APP=routes
 ENV FLASK_ENV=production
-ENV DATABASE_URL=postgresql://postgres:spasi2025@192.168.7.26/gallery_db
+ENV DATABASE_URL=postgresql://postgres:spasi2025@172.17.0.4/gallery_db
 
 # Expose port 5000 untuk Flask
 EXPOSE 5000
