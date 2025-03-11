@@ -4,3 +4,5 @@ flask-migrate
 flask-cors
 psycopg2-binary
 faker
+logging
+gunicorn
