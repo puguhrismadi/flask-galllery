@@ -13,8 +13,7 @@ RUN python -m venv venv && \
     pip install --no-cache-dir -r requirements.txt && \
     python -m compileall . && \
     mkdir -p /app/pycache && \
-    cp -r __pycache__/* /app/pycache/ && \
-    find /app -type f -name "*.py" -exec rm -f {} \;
+    cp -r __pycache__/* /app/pycache/ ;
 
 # Hanya simpan file hasil kompilasi
 WORKDIR /app/pycache
