@@ -6,14 +6,13 @@ WORKDIR /app
 
 # Salin file yang diperlukan
 COPY . .
-
 # Install dependencies dalam virtual environment
-RUN python -m venv venv && \
-    . venv/bin/activate && \
-    pip install --no-cache-dir -r requirements.txt && \
-    python -m compileall . && \
-    mkdir -p /app/pycache && cp -r __pycache__/* /app/pycache/
-
+RUN python -m venv venv \
+    && . venv/bin/activate \
+    && pip install --no-cache-dir -r requirements.txt \
+    && python -m compileall . \
+    && mkdir -p /app/pycache \
+    && cp -r __pycache__/* /app/pycache/
 # Hanya simpan file hasil kompilasi
 WORKDIR /app/pycache
 
