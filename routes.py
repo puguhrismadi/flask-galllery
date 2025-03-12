@@ -45,5 +45,8 @@ def delete_image(id):
     db.session.commit()
     return jsonify({"message": "Image deleted successfully"}), 200
 
+@app.route('/', methods=['GET'])
+def index():
+    return "Hello, World!"
 if __name__ == "__main__":
     app.run(debug=True)
